@@ -8,6 +8,7 @@ fetch('https://determined-unleashed-ixia.glitch.me/movies')
         setTimeout(() => {
             console.log('Glitch:', data);
             document.querySelector(".preload").style.display = "none"; //stop the load
+            document.querySelector(".display").style.display = "block"; //stop the load
         }, 3000);
     })
 
@@ -18,20 +19,15 @@ function getMovies() {
 }
 // getMovies();
 
-// OMDB
-fetch(omdbKey).then((response) => {
-    console.log('OMDB:', response.json());
-});
-
 // Add a Movie
 function addMovie(title, year, genre, plot, rated) {
     $.post('https://determined-unleashed-ixia.glitch.me/movies', {
         title, year, genre, plot, rated
     }).done(function(data) {
-        console.log('Movie added:', data); // Maybe breaks the function?
+        // console.log('Movie added:', data); // Maybe breaks the function?
     });
 }
-addMovie("b", "b", "b", "b", "b");
+// addMovie("b", "b", "b", "b", "b");
 
 // Remove a Movie
 function removeMovie(id) {
@@ -44,6 +40,30 @@ function removeMovie(id) {
     });
 }
 // removeMovie();
+
+// OMDB Pull Function
+function omdbData() {
+    return fetch(omdbKey).then(response => response.json()) // Converts the response into a json
+}
+
+$.get("https://determined-unleashed-ixia.glitch.me/movies").done(function (data) {
+    omdbData().then( data => {
+    console.log('OMDB:', data);
+
+    // Details from OMDB
+    let {Title, Year, Genre, Rated, Plot, Poster} = data;
+    console.log(Title, Year, Genre, Rated, Plot, Poster);
+
+    // Pushes to the Card
+    $('#title').html(Title);
+    $('#year').html(Year);
+    $('#genre').html(Genre);
+    $('#rated').html(Rated);
+    $('#plot').html(Plot);
+    $('#img').html(`<img src="${Poster}" class="rounded-start img-fluid">`);
+
+    });
+});
 
 // Specifications
 // Your application should:
