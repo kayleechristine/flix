@@ -1,3 +1,50 @@
+// Loading
+const loader = document.querySelector('.preload');
+
+// Glitch Database
+fetch('https://determined-unleashed-ixia.glitch.me/movies')
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            console.log('Glitch:', data);
+            document.querySelector(".preload").style.display = "none"; //stop the load
+        }, 3000);
+    })
+
+function getMovies() {
+    fetch('https://determined-unleashed-ixia.glitch.me/movies').then((response) => {
+        console.log('Movies:', response.json());
+    });
+}
+// getMovies();
+
+// OMDB
+fetch(omdbKey).then((response) => {
+    console.log('OMDB:', response.json());
+});
+
+// Add a Movie
+function addMovie(title, year, genre, plot, rated) {
+    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+        title, year, genre, plot, rated
+    }).done(function(data) {
+        console.log('Movie added:', data); // Maybe breaks the function?
+    });
+}
+addMovie("b", "b", "b", "b", "b");
+
+// Remove a Movie
+function removeMovie(id) {
+    fetch('https://determined-unleashed-ixia.glitch.me/movies' + "/" + id, {
+        method: 'DELETE'
+    }).then(() => {
+        console.log('removed');
+    }).catch(err => {
+        console.error(err)
+    });
+}
+// removeMovie();
+
 // Specifications
 // Your application should:
 //
@@ -30,53 +77,3 @@
 //      TODO: Allow users to sort the movies by rating, title, or genre (if you have it).
 //      TODO: Allow users to search through the movies by rating, title, or genre (if you have it).
 //      TODO: Use a free movie API like OMDB to include extra info or render movie posters.
-//
-
-setTimeout(() => {
-    console.log() // state is "fulfilled" or "rejected"
-}, 5000);
-
-fetch('https://determined-unleashed-ixia.glitch.me/movies')
-    .then(response => response.json())
-    .then(data => {
-        setTimeout(() => {
-            console.log(data);
-            document.querySelector(".preload").style.display = "none"; //stop the load
-        }, 3000);
-    })
-
-// fetch('https://determined-unleashed-ixia.glitch.me/movies').then((response) => {
-//     console.log(response.json());
-// });
-
-fetch(omdbKey).then((response) => {
-    console.log(response.json());
-});
-//
-// fetch('https://determined-unleashed-ixia.glitch.me/movies').then((response) => {
-//     console.log(response.json());
-// }).catch((error) => {
-//     console.error(error);
-// }).finally(() => {
-//     mainSection.innerHTML = "<h2>Done.</h2>";
-// })
-
-/**********************  loader ***********************/
-const loader = document.querySelector('.preload');
-const emoji = loader.querySelector('.emoji');
-
-const emojis = ["🕐", "🕜", "🕑","🕝", "🕒", "🕞", "🕓", "🕟", "🕔", "🕠", "🕕", "🕡", "🕖", "🕢",  "🕗", "🕣", "🕘", "🕤", "🕙",  "🕥", "🕚", "🕦",  "🕛", "🕧"];
-
-const interval = 125;
-
-const loadEmojis = (arr) => {
-    setInterval(() => {
-        emoji.innerText = arr[Math.floor(Math.random() * arr.length)];
-        //console.log(Math.floor(Math.random() * arr.length))
-    }, interval);
-}
-
-const init = () => {
-    loadEmojis(emojis);
-}
-init();
