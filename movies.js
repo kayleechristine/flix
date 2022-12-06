@@ -13,19 +13,23 @@ function addMovie(title, year, genre, plot, rated) {
 // Fetches movie information from the Glitch database.
 // Sets a "Loading" message while the promise is still pending.
 // getMovies function returns a list of movies in the Glitch database.
+
 fetch('https://determined-unleashed-ixia.glitch.me/movies')
     .then(response => response.json())
     .then(data => {
         setTimeout(() => {
             console.log('Glitch:', data);
             document.querySelector(".preload").style.display = "none"; // stop the load
+            
             document.querySelector(".display").style.display = "flex"; // show the main
+
         }, 3000);
     })
 
 function getMovies() {
     return fetch('https://determined-unleashed-ixia.glitch.me/movies').then(response => response.json());
 }
+
 getMovies().then(data => console.log('Glitch:', data[0].Title));
 
 // --------------------- Remove Movie Card --------------------------- //
@@ -54,6 +58,7 @@ function movieData(title) {
 function omdbData() {
     return fetch(omdbKey).then(response => response.json());
 }
+
 // omdbData().then(data => console.log('OMDB:', data));
 
 // --------------------- Create Movie Card --------------------------- //
@@ -143,24 +148,64 @@ function searchMovies() {
     fetch(omdbKey2).then((response) => {
         console.log('OMDB:', response.json());
     });
+})
+// --------------------- End Movie Search ----------------------------------
+$.get("https://determined-unleashed-ixia.glitch.me/movies").done(function (data) {
+    omdbData().then( data => {
+        console.log('OMDB:', data);
+
+        // Details from OMDB
+        let {Title, Year, Genre, Rated, Plot, Poster} = data;
+        // console.log(Title, Year, Genre, Rated, Plot, Poster);
+
+        // Pushes to the Card
+        $('#title').html(Title);
+        $('#year').html(Year);
+        $('#genre').html(Genre);
+        $('#rated').html(Rated);
+        $('#plot').html(Plot);
+        $('#img').html(`<img src="${Poster}" class="rounded-start img-fluid">`);
+
+    });
+});
+//------------ Add a Movie Function ----------------
+let movieAddBtn = document.querySelector('#movie-add-btn');
+movieAddBtn.addEventListener('click', addMovie);
+// function makes post request to glitch db
+function addMovie(title, year, genre, plot, rated) {
+    event.preventDefault();
+
+    let newTitle = document.querySelector('#new-movie-title').value
+    let newYear = document.querySelector('#new-movie-year').value
+    let newGenre = document.querySelector('#new-movie-genre').value
+    let newPlot = document.querySelector('#new-movie-plot').value
+    let newRated = document.querySelector('#new-movie-rated').value
+    let newPoster = document.querySelector('#new-movie-poster').value
+
+    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+        title, year, genre, plot, rated
+    }).done(function() {
+        console.log(newTitle, newYear, newGenre, newPlot, newRated);
+        console.log('Movie added');
+    });
+
+    console.log(getMovies());
+
 }
 
-function searchData() {
-    return fetch(omdbKey2).then(response => response.json());
-}
-
+//------------- Add Movie End -----------------------
 // Specifications
 // Your application should:
 //
 //      On page load:
-//      Display a "loading..." message
-//      TODO: Make an AJAX request to get a listing of all the movies
-//      TODO: When the initial AJAX request comes back, remove the "loading..." message and
-//       replace it with HTML generated from the json response your code receives
+//      Completed: Display a "loading..." message
+//      Completed: Make an AJAX request to get a listing of all the movies
+//      Completed: When the initial AJAX request comes back, remove the "loading..." message and
+//      replace it with HTML generated from the json response your code receives
 //
 //      Allow users to add new movies:
-//      TODO: Create a form for adding a new movie that has fields for the movie's title and rating
-//      TODO: When the form is submitted, the page should not reload / refresh, instead, your javascript
+//      TODO: Create a form for adding a new movie that has fields for the movie's title and           rating
+//      TODO: When the form is submitted, the page should not reload / refresh, instead, your           javascript
 //       should make a POST request to /movies with the information the user put into the form
 //
 //      Allow users to edit existing movies:

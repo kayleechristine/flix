@@ -36,7 +36,9 @@
                     <a class="nav-link" href="#">Features</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addMovieForm">Add Your Movie</a>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
@@ -65,15 +67,159 @@
     <div class="emoji">Loading... 🕐</div>
 </div>
 
-<main class="m-3 display" id="movie-search-container"></main>
+<main class="m-3 display" id="main-section">
 
-    <!--Bootstrap JavaScript-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <!--jQuery Script-->
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    <div class="card text-white bg-primary mb-3" style="width: 520px">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <span id="img"></span>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><span id="title"></span></h5>
+                    <p class="card-text"><span id="plot"></span></p>
+                    <p class="card-text">
+                        <small class="text-muted"><span id="year"></span> | </small>
+                        <small class="text-muted"><span id="rated"></span> | </small>
+                        <small class="text-muted"><span id="genre"></span></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+<!----------- Modal ------------->
+<div class="modal fade" id="addMovieForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add To Our Database</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="row g-2">
+                <!------- Add Movie Title ------->
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="new-movie-title" placeholder="Title Here">
+                        <label for="new-movie-title">Title</label>
+                    </div>
+                </div>
+                <!------- Add Movie Year ------->
+                <div class="col-md">
+                    <div class="form-floating">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="new-movie-year" placeholder="Release Year Here">
+                            <label for="new-movie-year">Release Year</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------- Add Movie Genre ------->
+            <div class="modal-body">
+                Genre:
+            </div>
+            <!------- Genre Options --------->
+            <div>
+                <!---------------- Genre Row 1 ----------------->
+                <!-- Sci-Fi Button -->
+                <input type="checkbox" class="btn-check" id="sci-fi" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="sci-fi">Sci-Fi</label>
+                <!-- Fantasy Button -->
+                <input type="checkbox" class="btn-check" id="fantasy" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="fantasy">Fantasy</label>
+                <!-- Action Button -->
+                <input type="checkbox" class="btn-check" id="action" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="action">Action</label>
+                <!-- Romance Button -->
+                <input type="checkbox" class="btn-check" id="romance" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="romance">Romance</label>
+                <!--------------- Genre Row 2 -------------------->
+                <!-- Mystery Button -->
+                <input type="checkbox" class="btn-check" id="Mystery" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="Mystery">Mystery</label>
+                <!-- Horror Button -->
+                <input type="checkbox" class="btn-check" id="Horror" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="Horror">Horror</label>
+                <!-- Thriller Button -->
+                <input type="checkbox" class="btn-check" id="thriller" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="thriller">Thriller</label>
+                <!-- Drama Button -->
+                <input type="checkbox" class="btn-check" id="drama" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="drama">Drama</label>
+                <!--------------- Genre Row 3 ----------------->
+                <!-- Adventure Button -->
+                <input type="checkbox" class="btn-check" id="adventure" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="adventure">Adventure</label>
+                <!-- Western Button -->
+                <input type="checkbox" class="btn-check" id="western" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="western">Western</label>
+                <!-- Documentary Button -->
+                <input type="checkbox" class="btn-check" id="documentary" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="documentary">Documentary</label>
+                <!------------------- Genre Row 3 ---------------------->
+                <!-- Epic Button -->
+                <input type="checkbox" class="btn-check" id="epic" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="epic">Epic</label>
+                <!-- History Button -->
+                <input type="checkbox" class="btn-check" id="history" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="history">History</label>
+                <!-- War Button -->
+                <input type="checkbox" class="btn-check" id="war" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="war">War</label>
+                <!-- Comedy Button -->
+                <input type="checkbox" class="btn-check" id="comedy" checked autocomplete="off">
+                <label class="btn btn-outline-secondary" for="comedy">Comedy</label>
+            </div>
+
+            <!------- Add Movie Rating ------->
+            <div class="modal-body">
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                        <<option selected>Movie Rating</option>
+                        <option value="G">G: General Audiences</option>
+                        <option value="PG-13">PG-13: Parental Guidance Suggested</option>
+                        <option value="R">R: Restricted</option>
+                    </select>
+                    <label for="floatingSelect">Rating</label>
+                </div>
+            </div>
+            <!------- Add Movie Plot ------->
+            <div class="modal-body" id="new-movie-plot">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Enter Plot Here" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea">Plot:</label>
+                </div>
+            </div>
+            <!------- Add Movie Poster ------->
+            <div class="modal-body">
+                <div class="form-floating">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="new-movie-poster" placeholder="Poster Link Here">
+                        <label for="new-movie-year">Movie Image Link:</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="movie-add-btn">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Bootstrap JavaScript-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!--jQuery Script-->
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <!--Custom JavaScript-->
-    <script src="keys.js"></script>
-    <script src="movies.js"></script>
+<!--Custom JavaScript-->
+<script src="keys.js"></script>
+<script src="movies.js"></script>
+
 </body>
 </html>
