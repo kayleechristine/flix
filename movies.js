@@ -47,13 +47,17 @@ function omdbData() {
 }
 //--------------------- Create Movie Search Card ---------------------------
    // function creates card html for searched movie and assigns to a variable
-    function makeMovieProfile(coffee) {
 
+    function makeMovieProfile() {
+        //********* Need to feed searched movie info into variables below ************
         let movieProfile = '<div class="card movieProfile" style="width: 18rem;">';
-        movieProfile += '<img src="' + coffee.image +'" className="card-img-top" alt="...">';
+        movieProfile += '<img src="' + /* (Poster) Image Variable Here */ +'" className="card-img-top" alt="...">';
         movieProfile += '<div class="card-body">'
-        movieProfile += '<h5 class="card-title headerFont"> '+ coffee.name +' </h5>'
-        movieProfile += '<p class="card-text">' + coffee.roast + ' roast</p>'
+        movieProfile += '<h5 class="card-title headerFont"> '+ /* Movie Title Variable Here */ +' </h5>'
+        movieProfile += '<p class="card-text">' + /* (Actors) Movie Info Block Variable Here */ + ' roast</p>'
+        movieProfile += '<p class="card-text">' + /* (Director) Movie Info Block Variable Here */ + ' roast</p>'
+        movieProfile += '<p class="card-text">' + /* (Plot) Movie Info Block Variable Here */ + ' roast</p>'
+        movieProfile += '<p class="card-text">' + /* (Genre) Movie Info Block Variable Here */ + ' roast</p>'
         movieProfile += '</div>'
         movieProfile += '</div>'
 
@@ -61,7 +65,7 @@ function omdbData() {
     }
     // Pushes searched movie card to HTML container
     function loadMovieProfile() {
-
+        // ******* Need to call
         let searchMovieContainer = document.querySelector('#movie-search-container');
         searchMovieContainer.innerHTML = makeMovieProfile();
 
