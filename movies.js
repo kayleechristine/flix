@@ -7,7 +7,6 @@ function addMovie(title, year, genre, plot, rated) {
         console.log('Movie added');
     });
 }
-// addMovie("Spirited Away", "2008", "Animation, Adventure, Comedy", "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.", "G");
 
 // --------------------- Glitch Database --------------------------- //
 // Fetches movie information from the Glitch database.
@@ -77,13 +76,13 @@ function makeMovieCards() {
             console.log(Title, Year, Genre, Rated, Plot, Poster);
 
             // Generates Card HTML
-            movieCard += `<div class="card text-white bg-primary mb-3" style="width: 500px">`;
+            movieCard += `<div class="card text-white bg-primary mb-3">`;
             movieCard += `<div class="row g-0"><div class="col-md-4 d-flex">`;
             movieCard += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
             movieCard += `<div class="col-md-8"><div class="card-body">`;
             movieCard += `<h5 class="card-title d-inline">${Title}</h5>`;
             movieCard += `<small class="text-muted ms-2">${Year}</small>`;
-            movieCard += `<p class="card-text">${Plot}</p>`;
+            movieCard += `<p class="card-text mt-2">${Plot}</p>`;
             movieCard += `<p class="card-text">`;
             movieCard += `<small class="text-muted bottom">${Rated} | ${Genre}</small>`;
             movieCard += `</p></div></div></div></div>`;
@@ -98,36 +97,6 @@ function makeMovieCards() {
     })
 }
 makeMovieCards();
-
-    // $.get("https://determined-unleashed-ixia.glitch.me/movies").done(function (data) {
-    //
-    //     omdbData().then(data => {
-            // console.log('OMDB:', data);
-
-            // // OMDB Data
-            // let {Title, Year, Genre, Rated, Plot, Poster} = data;
-            // // console.log(Title, Year, Genre, Rated, Plot, Poster);
-            //
-            // // Generates Card HTML
-            // let movieProfile = `<div class="card text-white bg-primary mb-3" style="width: 520px">`;
-            // movieProfile += `<div class="row g-0"><div class="col-md-4">`;
-            // movieProfile += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
-            // movieProfile += `<div class="col-md-8"><div class="card-body">`;
-            // movieProfile += `<h5 class="card-title">${Title}</h5>`;
-            // movieProfile += `<p class="card-text">${Plot}</p>`;
-            // movieProfile += `<p class="card-text">`;
-            // movieProfile += `<small class="text-muted">${Year} | </small>`;
-            // movieProfile += `<small class="text-muted">${Rated} | </small>`;
-            // movieProfile += `<small class="text-muted">${Genre}</small>`;
-            // movieProfile += `</p></div></div></div></div>`;
-            //
-            // let searchMovieContainer = document.querySelector('#movie-search-container');
-            // searchMovieContainer.innerHTML = movieProfile;
-
-//         });
-//     });
-// }
-// makeMovieCards();
 
 // --------------------- Movie Search --------------------------- //
 //
@@ -154,8 +123,8 @@ function searchData() {
 //
 //      On page load:
 //      Display a "loading..." message
-//      TODO: Make an AJAX request to get a listing of all the movies
-//      TODO: When the initial AJAX request comes back, remove the "loading..." message and
+//      Make an AJAX request to get a listing of all the movies
+//      When the initial AJAX request comes back, remove the "loading..." message and
 //       replace it with HTML generated from the json response your code receives
 //
 //      Allow users to add new movies:
