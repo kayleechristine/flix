@@ -35,3 +35,12 @@ p {
     bottom: 0;
     margin-bottom: 0.5em;
 }
+.bi-three-dots {
+    fill: white;
+}
+.btn-group {
+    scale: 75%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}

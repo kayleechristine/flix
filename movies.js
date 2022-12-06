@@ -82,6 +82,16 @@ function makeMovieCards() {
             movieCard += `<div class="col-md-8"><div class="card-body">`;
             movieCard += `<h5 class="card-title d-inline">${Title}</h5>`;
             movieCard += `<small class="text-muted ms-2">${Year}</small>`;
+
+            movieCard += `<div class="btn-group dropend">`;
+            movieCard += `  <button type="button" class="btn btn-dark btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+                            </button>`;
+            movieCard += `  <ul class="dropdown-menu">
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Delete</a></li>
+                            </ul>
+                            </div>`;
             movieCard += `<p class="card-text mt-2">${Plot}</p>`;
             movieCard += `<p class="card-text">`;
             movieCard += `<small class="text-muted bottom">${Rated} | ${Genre}</small>`;
@@ -128,7 +138,7 @@ function searchData() {
 //       replace it with HTML generated from the json response your code receives
 //
 //      Allow users to add new movies:
-//      TODO: Create a form for adding a new movie that has fields for the movie's title and rating
+//      Create a form for adding a new movie that has fields for the movie's title and rating
 //      TODO: When the form is submitted, the page should not reload / refresh, instead, your javascript
 //       should make a POST request to /movies with the information the user put into the form
 //
