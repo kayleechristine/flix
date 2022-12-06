@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="movies.css">
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -53,14 +52,15 @@
                     </div>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            <!----------------- Movie Search ------------->
+            <form class="d-flex" role="search">
+                <input id="movie-search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button id="movie-search-btn" class="btn btn-outline-success" type="">Search</button>
             </form>
         </div>
     </div>
 </nav>
-
+<!------------------- Nav Bar End ------------------->
 <div class="preload">
     <div class="emoji">Loading... 🕐</div>
 </div>
