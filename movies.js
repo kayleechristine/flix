@@ -45,7 +45,44 @@ function removeMovie(id) {
 function omdbData() {
     return fetch(omdbKey).then(response => response.json()) // Converts the response into a json
 }
+//--------------------- Create Movie Search Card ---------------------------
+   // function creates card html for searched movie and assigns to a variable
+    function makeMovieProfile(coffee) {
 
+        let movieProfile = '<div class="card movieProfile" style="width: 18rem;">';
+        movieProfile += '<img src="' + coffee.image +'" className="card-img-top" alt="...">';
+        movieProfile += '<div class="card-body">'
+        movieProfile += '<h5 class="card-title headerFont"> '+ coffee.name +' </h5>'
+        movieProfile += '<p class="card-text">' + coffee.roast + ' roast</p>'
+        movieProfile += '</div>'
+        movieProfile += '</div>'
+
+        return movieProfile;
+    }
+    // Pushes searched movie card to HTML container
+    function loadMovieProfile() {
+
+        let searchMovieContainer = document.querySelector('#movie-search-container');
+        searchMovieContainer.innerHTML = makeMovieProfile();
+
+    }
+    //******* Still need to create HTML container assigned to container to feed to ******
+//--------------------- End Movie Search Card ---------------------------
+//--------------------- Start Search a Movie ----------------------------------
+    let userMovieSearch = document.querySelector('#movie-search-btn');
+
+    userMovieSearch.addEventListener('click', function (){
+
+    event.preventDefault();
+
+    let titleSearch = document.querySelector('#movie-search-input').value
+    let omdbKey2 = "http://www.omdbapi.com/?t=" + titleSearch + "&apikey=850df038"
+
+    fetch(omdbKey2).then((response) => {
+        console.log('OMDB:', response.json());
+    });
+})
+// --------------------- End Movie Search ----------------------------------
 $.get("https://determined-unleashed-ixia.glitch.me/movies").done(function (data) {
     omdbData().then( data => {
     console.log('OMDB:', data);
