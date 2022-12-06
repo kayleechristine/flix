@@ -1,11 +1,34 @@
 // --------------------- Add Movie --------------------------- //
 // Adds a movie to the Glitch movie database.
+// function addMovie(title, year, genre, plot, rated) {
+//     $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+//         title, year, genre, plot, rated
+//     }).done(function() {
+//         console.log('Movie added');
+//     });
+// }
+
+let movieAddBtn = document.querySelector('#movie-add-btn');
+movieAddBtn.addEventListener('click', addMovie);
+// function makes post request to glitch db
 function addMovie(title, year, genre, plot, rated) {
+    event.preventDefault();
+
+    let newTitle = document.querySelector('#new-movie-title').value
+    let newYear = document.querySelector('#new-movie-year').value
+    let newGenre = document.querySelector('#new-movie-genre').value
+    let newPlot = document.querySelector('#new-movie-plot').value
+    let newRated = document.querySelector('#new-movie-rated').value
+    let newPoster = document.querySelector('#new-movie-poster').value
+
     $.post('https://determined-unleashed-ixia.glitch.me/movies', {
         title, year, genre, plot, rated
     }).done(function() {
+        console.log(newTitle, newYear, newGenre, newPlot, newRated);
         console.log('Movie added');
     });
+
+    console.log(getMovies());
 }
 
 // --------------------- Glitch Database --------------------------- //
@@ -48,7 +71,6 @@ function movieData(title) {
         console.log(`${title}:`, data);
     });
 }
-// movieData("little mermaid");
 
 function omdbData() {
     return fetch(omdbKey).then(response => response.json());
