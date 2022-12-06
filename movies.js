@@ -1,45 +1,39 @@
-// Loading
-const loader = document.querySelector('.preload');
+// --------------------- Add Movie --------------------------- //
+// Adds a movie to the Glitch movie database.
+function addMovie(title, year, genre, plot, rated) {
+    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+        title, year, genre, plot, rated
+    }).done(function() {
+        console.log('Movie added');
+    });
+}
+// addMovie("Spirited Away", "2008", "Animation, Adventure, Comedy", "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.", "G");
 
-movie = {title: "Ponyo", year: "2008", genre: "Animation, Adventure, Comedy", plot: "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.", rated: "G"};
+// --------------------- Glitch Database --------------------------- //
+// Fetches movie information from the Glitch database.
+// Sets a "Loading" message while the promise is still pending.
+// getMovies function returns a list of movies in the Glitch database.
 
-
-
-// function addMovie() {
-//     let newMovie = {
-//         title: "Ponyo",
-//         year: "2008",
-//         genre: "Animation, Adventure, Comedy",
-//         plot: "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.",
-//         rated: "G"
-//     }
-//     $.ajax('https://determined-unleashed-ixia.glitch.me/movies', {
-//         method: "POST",
-//         data: newMovie
-//     })
-//     console.log('Movie added');
-// }
-// addMovie();
-
-// Glitch Database
 fetch('https://determined-unleashed-ixia.glitch.me/movies')
     .then(response => response.json())
     .then(data => {
         setTimeout(() => {
             console.log('Glitch:', data);
             document.querySelector(".preload").style.display = "none"; // stop the load
-            document.querySelector(".display").style.display = "block"; // show the main
+            
+            document.querySelector(".display").style.display = "flex"; // show the main
+
         }, 3000);
     })
 
 function getMovies() {
-    fetch('https://determined-unleashed-ixia.glitch.me/movies').then((response) => {
-        console.log('Movies:', response.json());
-    });
+    return fetch('https://determined-unleashed-ixia.glitch.me/movies').then(response => response.json());
 }
-getMovies();
 
-// Remove a Movie
+getMovies().then(data => console.log('Glitch:', data[0].Title));
+
+// --------------------- Remove Movie Card --------------------------- //
+// Removes a movie from the Glitch database via the id number.
 function removeMovie(id) {
     fetch('https://determined-unleashed-ixia.glitch.me/movies' + "/" + id, {
         method: 'DELETE'
@@ -51,46 +45,105 @@ function removeMovie(id) {
 }
 // removeMovie();
 
-// OMDB Pull Function
+// --------------------- OMDB Movie Data --------------------------- //
+// Accepts a movie title and returns the data from OMDB.
+function movieData(title) {
+    let link = `http://www.omdbapi.com/?t=${title}&apikey=850df038`;
+    return fetch(link).then(response => response.json()).then(data => {
+        console.log(`${title}:`, data);
+    });
+}
+// movieData("little mermaid");
+
 function omdbData() {
-    return fetch(omdbKey).then(response => response.json()) // Converts the response into a json
+    return fetch(omdbKey).then(response => response.json());
 }
-//--------------------- Create Movie Search Card ---------------------------
-// function creates card html for searched movie and assigns to a variable
 
-function makeMovieProfile() {
-    //********* Need to feed searched movie info into variables below ************
-    let movieProfile = '<div class="card movieProfile" style="width: 18rem;">';
-    movieProfile += '<img src="' + /* (Poster) Image Variable Here */ +'" className="card-img-top" alt="...">';
-    movieProfile += '<div class="card-body">'
-    movieProfile += '<h5 class="card-title headerFont"> '+ /* Movie Title Variable Here */ +' </h5>'
-    movieProfile += '<p class="card-text">' + /* (Actors) Movie Info Block Variable Here */ + ' roast</p>'
-    movieProfile += '<p class="card-text">' + /* (Director) Movie Info Block Variable Here */ + ' roast</p>'
-    movieProfile += '<p class="card-text">' + /* (Plot) Movie Info Block Variable Here */ + ' roast</p>'
-    movieProfile += '<p class="card-text">' + /* (Genre) Movie Info Block Variable Here */ + ' roast</p>'
-    movieProfile += '</div>'
-    movieProfile += '</div>'
+// omdbData().then(data => console.log('OMDB:', data));
 
-    return movieProfile;
+// --------------------- Create Movie Card --------------------------- //
+// Creates pulls movie data from the OMDB API and assigns it to variables.
+// It then generates the card HTML to be pushed into the Doc later on.
+
+let omdbKey2;
+
+function makeMovieCards() {
+
+    getMovies().then(data => {
+        console.log(data);
+
+        let movieCard = '';
+        let movieContainer = document.querySelector('#movie-search-container');
+
+        data.forEach(movie => {
+
+            // OMDB Data
+            let {Title, Year, Genre, Rated, Plot, Poster} = movie;
+            console.log(Title, Year, Genre, Rated, Plot, Poster);
+
+            // Generates Card HTML
+            movieCard += `<div class="card text-white bg-primary mb-3" style="width: 500px">`;
+            movieCard += `<div class="row g-0"><div class="col-md-4 d-flex">`;
+            movieCard += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
+            movieCard += `<div class="col-md-8"><div class="card-body">`;
+            movieCard += `<h5 class="card-title d-inline">${Title}</h5>`;
+            movieCard += `<small class="text-muted ms-2">${Year}</small>`;
+            movieCard += `<p class="card-text">${Plot}</p>`;
+            movieCard += `<p class="card-text">`;
+            movieCard += `<small class="text-muted bottom">${Rated} | ${Genre}</small>`;
+            movieCard += `</p></div></div></div></div>`;
+
+            // console.log(`${Title}:`, movieCard);
+
+        })
+
+        // console.log('Movie Card:', movieCard);
+        movieContainer.innerHTML = movieCard;
+
+    })
 }
-// Pushes searched movie card to HTML container
-function loadMovieProfile() {
-    // ******* Need to call
-    let searchMovieContainer = document.querySelector('#movie-search-container');
-    searchMovieContainer.innerHTML = makeMovieProfile();
+makeMovieCards();
 
-}
-//******* Still need to create HTML container assigned to container to feed to ******
-//--------------------- End Movie Search Card ---------------------------
-//--------------------- Start Search a Movie ----------------------------------
+    // $.get("https://determined-unleashed-ixia.glitch.me/movies").done(function (data) {
+    //
+    //     omdbData().then(data => {
+            // console.log('OMDB:', data);
+
+            // // OMDB Data
+            // let {Title, Year, Genre, Rated, Plot, Poster} = data;
+            // // console.log(Title, Year, Genre, Rated, Plot, Poster);
+            //
+            // // Generates Card HTML
+            // let movieProfile = `<div class="card text-white bg-primary mb-3" style="width: 520px">`;
+            // movieProfile += `<div class="row g-0"><div class="col-md-4">`;
+            // movieProfile += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
+            // movieProfile += `<div class="col-md-8"><div class="card-body">`;
+            // movieProfile += `<h5 class="card-title">${Title}</h5>`;
+            // movieProfile += `<p class="card-text">${Plot}</p>`;
+            // movieProfile += `<p class="card-text">`;
+            // movieProfile += `<small class="text-muted">${Year} | </small>`;
+            // movieProfile += `<small class="text-muted">${Rated} | </small>`;
+            // movieProfile += `<small class="text-muted">${Genre}</small>`;
+            // movieProfile += `</p></div></div></div></div>`;
+            //
+            // let searchMovieContainer = document.querySelector('#movie-search-container');
+            // searchMovieContainer.innerHTML = movieProfile;
+
+//         });
+//     });
+// }
+// makeMovieCards();
+
+// --------------------- Movie Search --------------------------- //
+//
 let userMovieSearch = document.querySelector('#movie-search-btn');
+userMovieSearch.addEventListener('click', searchMovies);
 
-userMovieSearch.addEventListener('click', function (){
-
+function searchMovies() {
     event.preventDefault();
 
-    let titleSearch = document.querySelector('#movie-search-input').value
-    let omdbKey2 = "http://www.omdbapi.com/?t=" + titleSearch + "&apikey=850df038"
+    let titleSearch = document.querySelector('#movie-search-input').value;
+    omdbKey2 = "http://www.omdbapi.com/?t=" + titleSearch + "&apikey=850df038";
 
     fetch(omdbKey2).then((response) => {
         console.log('OMDB:', response.json());
@@ -137,6 +190,7 @@ function addMovie(title, year, genre, plot, rated) {
     });
 
     console.log(getMovies());
+
 }
 
 //------------- Add Movie End -----------------------
