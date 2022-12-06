@@ -1,14 +1,42 @@
 // Loading
 const loader = document.querySelector('.preload');
 
+movie = {title: "Ponyo", year: "2008", genre: "Animation, Adventure, Comedy", plot: "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.", rated: "G"};
+
+// Add a Movie
+function addMovie(title, year, genre, plot, rated) {
+    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+        title, year, genre, plot, rated
+    }).done(function() {
+        console.log('Movie added'); // Maybe breaks the function?
+    });
+}
+addMovie("Spirited Away", "2008", "Animation, Adventure, Comedy", "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.", "G");
+
+// function addMovie() {
+//     let newMovie = {
+//         title: "Ponyo",
+//         year: "2008",
+//         genre: "Animation, Adventure, Comedy",
+//         plot: "A five-year-old boy develops a relationship with Ponyo, a young goldfish princess who longs to become a human after falling in love with him.",
+//         rated: "G"
+//     }
+//     $.ajax('https://determined-unleashed-ixia.glitch.me/movies', {
+//         method: "POST",
+//         data: newMovie
+//     })
+//     console.log('Movie added');
+// }
+// addMovie();
+
 // Glitch Database
 fetch('https://determined-unleashed-ixia.glitch.me/movies')
     .then(response => response.json())
     .then(data => {
         setTimeout(() => {
             console.log('Glitch:', data);
-            document.querySelector(".preload").style.display = "none"; //stop the load
-            document.querySelector(".display").style.display = "block"; //stop the load
+            document.querySelector(".preload").style.display = "none"; // stop the load
+            document.querySelector(".display").style.display = "block"; // show the main
         }, 3000);
     })
 
@@ -17,17 +45,7 @@ function getMovies() {
         console.log('Movies:', response.json());
     });
 }
-// getMovies();
-
-// Add a Movie
-function addMovie(title, year, genre, plot, rated) {
-    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
-        title, year, genre, plot, rated
-    }).done(function(data) {
-        // console.log('Movie added:', data); // Maybe breaks the function?
-    });
-}
-// addMovie("b", "b", "b", "b", "b");
+getMovies();
 
 // Remove a Movie
 function removeMovie(id) {
@@ -52,7 +70,7 @@ $.get("https://determined-unleashed-ixia.glitch.me/movies").done(function (data)
 
     // Details from OMDB
     let {Title, Year, Genre, Rated, Plot, Poster} = data;
-    console.log(Title, Year, Genre, Rated, Plot, Poster);
+    // console.log(Title, Year, Genre, Rated, Plot, Poster);
 
     // Pushes to the Card
     $('#title').html(Title);
