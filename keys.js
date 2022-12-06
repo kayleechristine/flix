@@ -1,1 +1,1 @@
-const omdbKey = 'http://www.omdbapi.com/?t=avatar&apikey=5e3dce27';
+const omdbKey = 'http://www.omdbapi.com/?t=harry+potter&apikey=5e3dce27';
