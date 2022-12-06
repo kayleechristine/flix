@@ -14,6 +14,10 @@
 .navbar {
     color: lightgrey;
 }
+.brand {
+    width: 150px;
+    margin-right: 2em;
+}
 /*Card Formatting*/
 .card {
     margin: 0.5em;
@@ -30,4 +34,13 @@ p {
     position: absolute;
     bottom: 0;
     margin-bottom: 0.5em;
+}
+.bi-three-dots {
+    fill: white;
+}
+.btn-group {
+    scale: 75%;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
