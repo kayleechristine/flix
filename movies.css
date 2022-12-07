@@ -5,14 +5,19 @@
     justify-content: space-evenly;
     align-items: center;
 }
-.loading {
-    color: #f2f2f2;
-    text-align: center;
-    margin: 1em;
+.preload {
+    color: #e6040c;
+    scale: 200%;
+    margin-left: 50%;
+    margin-top: 300px;
 }
 /*Nav Bar*/
 .navbar {
     color: lightgrey;
+}
+.brand {
+    width: 150px;
+    margin-right: 2em;
 }
 /*Card Formatting*/
 .card {
@@ -30,4 +35,15 @@ p {
     position: absolute;
     bottom: 0;
     margin-bottom: 0.5em;
+}
+.bi-three-dots {
+    fill: white;
+}
+.dropdown-toggle {
+    scale: 75%;
+}
+.dropend {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
