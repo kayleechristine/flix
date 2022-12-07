@@ -1,35 +1,52 @@
-// --------------------- Add Movie --------------------------- //
-// Adds a movie to the Glitch movie database.
-// function addMovie(title, year, genre, plot, rated) {
-//     $.post('https://determined-unleashed-ixia.glitch.me/movies', {
-//         title, year, genre, plot, rated
-//     }).done(function() {
-//         console.log('Movie added');
-//     });
-// }
+//-------------------------- Genre Code ----------------------------
 
-let movieAddBtn = document.querySelector('#movie-add-btn');
-movieAddBtn.addEventListener('click', addMovie);
+    // Function generates genres selected into a global array
+    let newMovieGenres = []
+    function addNewGenre() {
+        newMovieGenres = [];
+        let genresChecked = document.getElementsByClassName("new-movie-genre");
+        for (let i = 0; i < 15; i++) {
+            if (genresChecked[i].checked === true && newMovieGenres.length === 0) {
+                newMovieGenres.push(`${genresChecked[i].value}`);
+            }
+            else if (genresChecked[i].checked === true){
+                newMovieGenres.push(` ${genresChecked[i].value}`);
+            }
+        }
+        return newMovieGenres.toString()
+    }
+
+//--------------------------- Add Movie Code ---------------------------
+    let movieAddBtn = document.querySelector('#movie-add-btn');
+    movieAddBtn.addEventListener('click', addMovie);
+
 // function makes post request to glitch db
-function addMovie(title, year, genre, plot, rated) {
-    event.preventDefault();
+    function addMovie() {
+        event.preventDefault();
 
-    let newTitle = document.querySelector('#new-movie-title').value
-    let newYear = document.querySelector('#new-movie-year').value
-    let newGenre = document.querySelector('#new-movie-genre').value
-    let newPlot = document.querySelector('#new-movie-plot').value
-    let newRated = document.querySelector('#new-movie-rated').value
-    let newPoster = document.querySelector('#new-movie-poster').value
+        let newTitle = document.querySelector('#new-movie-title').value;
+        let newYear = document.querySelector('#new-movie-year').value;
+        let newGenre = addNewGenre()
+        let newPlot = document.querySelector('#new-movie-plot').value;
+        let newRated = document.querySelector('#new-movie-rated').value;
+        let newPoster = document.querySelector('#new-movie-poster').value;
 
-    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
-        title, year, genre, plot, rated
-    }).done(function() {
-        console.log(newTitle, newYear, newGenre, newPlot, newRated);
-        console.log('Movie added');
-    });
+        postTest(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
+        console.log(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
+    }
 
-    // console.log(getMovies());
-}
+    function postTest(title, year, genre, plot, rating, poster) {
+        $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+            Title: title,
+            Year: year,
+            Genre: genre,
+            Plot: plot,
+            Rated: rating,
+            Poster: poster,
+        }).done(function (data) {
+            // do something with the response
+        });
+    }
 
 // --------------------- Glitch Database --------------------------- //
 // Fetches movie information from the Glitch database.
@@ -64,7 +81,7 @@ function removeMovie(id) {
         console.error(err)
     });
 }
-// removeMovie();
+// removeMovie(1);
 
 // --------------------- OMDB Movie Data --------------------------- //
 // Accepts a movie title and returns the data from OMDB.
