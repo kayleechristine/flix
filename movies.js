@@ -1,22 +1,3 @@
-// --------------------- Add Movie --------------------------- //
-// Adds a movie to the Glitch movie database.
-// function addMovie(title, year, genre, plot, rated) {
-//     $.post('https://determined-unleashed-ixia.glitch.me/movies', {
-//         title, year, genre, plot, rated
-//     }).done(function() {
-//         console.log('Movie added');
-//     });
-// }
-
-// let genreButton = document.querySelector('#sci-fi');
-// genreButton.addEventListener('click', test);
-//
-// function test() {
-//     event.preventDefault()
-//
-//     let tagTest = document.querySelector('#sci-fi').value
-//     console.log(tagTest)
-// }
 //-------------------------- Genre Code ----------------------------
 
     // Function generates genres selected into a global array
@@ -71,24 +52,27 @@
 // Fetches movie information from the Glitch database.
 // Sets a "Loading" message while the promise is still pending.
 // getMovies function returns a list of movies in the Glitch database.
+// Loads event listeners after cards have populated.
 fetch('https://determined-unleashed-ixia.glitch.me/movies')
     .then(response => response.json())
     .then(data => {
         setTimeout(() => {
             console.log('Glitch:', data);
-            document.querySelector(".preload").style.display = "none"; // stop the load
-            document.querySelector(".display").style.display = "flex"; // show the main
+            document.querySelector(".preload").style.display = "none"; // hide the load animation
+            document.querySelector(".display").style.display = "flex"; // show the main content
         }, 3000);
     })
 
 function getMovies() {
     return fetch('https://determined-unleashed-ixia.glitch.me/movies').then(response => response.json());
 }
-getMovies().then(data => console.log('Glitch:', data[0].Title));
+getMovies().then(data => console.log('Glitch:', data));
+getMovies();
 
 // --------------------- Remove Movie Card --------------------------- //
 // Removes a movie from the Glitch database via the id number.
 function removeMovie(id) {
+
     fetch('https://determined-unleashed-ixia.glitch.me/movies' + "/" + id, {
         method: 'DELETE'
     }).then(() => {
@@ -116,7 +100,6 @@ function omdbData() {
 // --------------------- Create Movie Card --------------------------- //
 // Creates pulls movie data from the OMDB API and assigns it to variables.
 // It then generates the card HTML to be pushed into the Doc later on.
-
 let omdbKey2;
 
 function makeMovieCards() {
@@ -130,8 +113,8 @@ function makeMovieCards() {
         data.forEach(movie => {
 
             // OMDB Data
-            let {Title, Year, Genre, Rated, Plot, Poster} = movie;
-            console.log(Title, Year, Genre, Rated, Plot, Poster);
+            let {Title, Year, Genre, Rated, Plot, Poster, id} = movie;
+            // console.log(Title, Year, Genre, Rated, Plot, Poster, id);
 
             // Generates Card HTML
             movieCard += `<div class="card text-white bg-primary mb-3">`;
@@ -140,29 +123,42 @@ function makeMovieCards() {
             movieCard += `<div class="col-md-8"><div class="card-body">`;
             movieCard += `<h5 class="card-title d-inline">${Title}</h5>`;
             movieCard += `<small class="text-muted ms-2">${Year}</small>`;
-
-            movieCard += `<div class="btn-group dropend">`;
-            movieCard += `  <button type="button" class="btn btn-dark btn-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
-                            </button>`;
+            movieCard += `<div class="dropend">`;
+            movieCard += `<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>`;
             movieCard += `  <ul class="dropdown-menu">
-                            <li><a href="#">Edit</a></li>
-                            <li><a href="#">Delete</a></li>
+                                <li><a class="dropdown-item edit-movie" href="#" data-dbid="${id}">Edit</a></li>
+                                <li><a class="dropdown-item delete-movie" href="#" data-dbid="${id}">Delete</a></li>
                             </ul>
                             </div>`;
             movieCard += `<p class="card-text mt-2">${Plot}</p>`;
-            movieCard += `<p class="card-text">`;
-            movieCard += `<small class="text-muted bottom">${Rated} | ${Genre}</small>`;
+            movieCard += `<p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small>`;
             movieCard += `</p></div></div></div></div>`;
-
-            // console.log(`${Title}:`, movieCard);
 
         })
 
-        // console.log('Movie Card:', movieCard);
         movieContainer.innerHTML = movieCard;
 
+        // Edit Movie TODO: Functionality
+        $('.edit-movie').click(function(e){
+            e.preventDefault();
+            console.log('Edit Movie fired');
+            alert('Boom');
+
+            let editId = this.getAttribute('data-dbid');
+            console.log(editId);
+            getMovies().then(data => console.log('Edit this:', data[editId - 1].Title));
+
+        })
+
+        // Delete Movie
+        $('.delete-movie').click(function(e){
+            e.preventDefault();
+            let deleteId = this.getAttribute('data-dbid');
+            removeMovie(deleteId);
+        })
+
     })
+
 }
 makeMovieCards();
 
@@ -201,20 +197,20 @@ function searchData() {
 //       should make a POST request to /movies with the information the user put into the form
 //
 //      Allow users to edit existing movies:
-//      TODO: Give users the option to edit an existing movie
-//      TODO: A form should be pre-populated with the selected movie's details
+//      Give users the option to edit an existing movie
+//      A form should be pre-populated with the selected movie's details
 //      TODO: Like creating a movie, this should not involve any page reloads, instead your javascript
 //       code should make an ajax request when the form is submitted.
 //
 //      Delete movies:
-//      TODO: Each movie should have a "delete" button
-//      TODO: When this button is clicked, your javascript should send a DELETE request
+//      Each movie should have a "delete" button
+//      When this button is clicked, your javascript should send a DELETE request
 //
 //      Bonuses:
 //      TODO: Add a disabled attribute to buttons while their corresponding ajax request is still pending.
-//      TODO: Show a loading animation instead of just text that says "loading...".
-//      TODO: Use modals for the creating and editing movie forms.
-//      TODO: Add a genre property to every movie.
+//      Show a loading animation instead of just text that says "loading...".
+//      Use modals for the creating and editing movie forms.
+//      Add a genre property to every movie.
 //      TODO: Allow users to sort the movies by rating, title, or genre (if you have it).
 //      TODO: Allow users to search through the movies by rating, title, or genre (if you have it).
-//      TODO: Use a free movie API like OMDB to include extra info or render movie posters.
+//      Use a free movie API like OMDB to include extra info or render movie posters.
