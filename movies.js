@@ -1,4 +1,4 @@
-//-------------------------- Genre Code ----------------------------
+// -------------------------- Genre Tags ---------------------------- //
 
     // Function generates genres selected into a global array
     let newMovieGenres = []
@@ -16,11 +16,11 @@
         return newMovieGenres.toString()
     }
 
-//--------------------------- Add Movie Code ---------------------------
+// --------------------------- Add a Custom Movie --------------------------- //
     let movieAddBtn = document.querySelector('#movie-add-btn');
     movieAddBtn.addEventListener('click', addMovie);
 
-// function makes post request to glitch db
+    // Function makes post request to glitch db
     function addMovie() {
         event.preventDefault();
 
@@ -29,7 +29,7 @@
         let newGenre = addNewGenre()
         let newPlot = document.querySelector('#new-movie-plot').value;
         let newRated = document.querySelector('#new-movie-rated').value;
-        let newPoster = document.querySelector('#new-movie-poster').value;
+        let newPoster = "https://i.ibb.co/ZcyNXmb/coming-soon.jpg";
 
         postTest(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
         console.log(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
@@ -44,7 +44,7 @@
             Rated: rating,
             Poster: poster,
         }).done(function (data) {
-            // do something with the response
+            makeMovieCards();
         });
     }
 
@@ -53,15 +53,18 @@
 // Sets a "Loading" message while the promise is still pending.
 // getMovies function returns a list of movies in the Glitch database.
 // Loads event listeners after cards have populated.
-fetch('https://determined-unleashed-ixia.glitch.me/movies')
-    .then(response => response.json())
-    .then(data => {
-        setTimeout(() => {
-            console.log('Glitch:', data);
-            document.querySelector(".preload").style.display = "none"; // hide the load animation
-            document.querySelector(".display").style.display = "flex"; // show the main content
-        }, 3000);
-    })
+function loadPage() {
+    fetch('https://determined-unleashed-ixia.glitch.me/movies')
+        .then(response => response.json())
+        .then(data => {
+            setTimeout(() => {
+                console.log('Glitch:', data);
+                document.querySelector(".preload").style.display = "none"; // hide the load animation
+                document.querySelector(".display").style.display = "flex"; // show the main content
+            }, 3000);
+        })
+}
+loadPage();
 
 function getMovies() {
     return fetch('https://determined-unleashed-ixia.glitch.me/movies').then(response => response.json());
@@ -76,12 +79,12 @@ function removeMovie(id) {
     fetch('https://determined-unleashed-ixia.glitch.me/movies' + "/" + id, {
         method: 'DELETE'
     }).then(() => {
-        console.log('removed');
+        makeMovieCards();
     }).catch(err => {
         console.error(err)
     });
 }
-// removeMovie(1);
+// removeMovie();
 
 // --------------------- OMDB Movie Data --------------------------- //
 // Accepts a movie title and returns the data from OMDB.
@@ -108,7 +111,7 @@ function makeMovieCards() {
         console.log(data);
 
         let movieCard = '';
-        let movieContainer = document.querySelector('#movie-search-container');
+        let movieContainer = document.querySelector('#movie-container');
 
         data.forEach(movie => {
 
@@ -148,14 +151,14 @@ function makeMovieCards() {
             console.log(editId);
             getMovies().then(data => console.log('Edit this:', data[editId - 1].Title));
 
-        })
+        });
 
         // Delete Movie
         $('.delete-movie').click(function(e){
-            e.preventDefault();
+            // e.preventDefault();
             let deleteId = this.getAttribute('data-dbid');
             removeMovie(deleteId);
-        })
+        });
 
     })
 
