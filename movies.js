@@ -26,69 +26,70 @@ function getMovies() {
 // These functions generate the genre tags for the glitch database.
 // One works for the New Movie feature and the other for the Edit Movie feature.
 
-    // New Genres:
-    let newMovieGenres = []
-    function addNewGenre() {
-        newMovieGenres = [];
-        let genresChecked = document.getElementsByClassName("new-movie-genre");
-        for (let i = 0; i < 15; i++) {
-            if (genresChecked[i].checked === true && newMovieGenres.length === 0) {
-                newMovieGenres.push(`${genresChecked[i].value}`);
-            }
-            else if (genresChecked[i].checked === true){
-                newMovieGenres.push(` ${genresChecked[i].value}`);
-            }
+// New Genres:
+let newMovieGenres = []
+function addNewGenre() {
+    newMovieGenres = [];
+    let genresChecked = document.getElementsByClassName("new-movie-genre");
+    for (let i = 0; i < 15; i++) {
+        if (genresChecked[i].checked === true && newMovieGenres.length === 0) {
+            newMovieGenres.push(`${genresChecked[i].value}`);
+        }
+        else if (genresChecked[i].checked === true){
+            newMovieGenres.push(` ${genresChecked[i].value}`);
         }
     }
-    return newMovieGenres.toString()
+    return newMovieGenres.toString();
 }
+
+
 
 let genres = ["sci-fi", "fantasy", "action", "romance", "mystery", "horror", "thriller", "drama", "adventure", "western", "documentary", "epic", "history", "war", "comedy", "crime"];
 
-    // Edit Genres:
-    function editMovieGenres() {
-        let editMovieGenres = [];
-        genres.forEach(genre => {
-            if (document.getElementById(`edit-${genre}`).checked === true) {
-                array = genre.split('');
-                genre = array[0].toUpperCase() + array.splice(1).join('');
-                editMovieGenres.push(genre);
-            }
-        })
-        return editMovieGenres.join(', ');
-    }
+// Edit Genres:
+function editMovieGenres() {
+    let editMovieGenres = [];
+    genres.forEach(genre => {
+        if (document.getElementById(`edit-${genre}`).checked === true) {
+            array = genre.split('');
+            genre = array[0].toUpperCase() + array.splice(1).join('');
+            editMovieGenres.push(genre);
+        }
+    })
+    return editMovieGenres.join(', ');
+}
 
 // --------------------------- Add a Custom Movie --------------------------- //
-    let movieAddBtn = document.querySelector('#movie-add-btn');
-    movieAddBtn.addEventListener('click', addMovie);
+let movieAddBtn = document.querySelector('#movie-add-btn');
+movieAddBtn.addEventListener('click', addMovie);
 
-    // Function makes post request to glitch db
-    function addMovie() {
-        event.preventDefault();
+// Function makes post request to glitch db
+function addMovie() {
+    event.preventDefault();
 
-        let newTitle = document.querySelector('#new-movie-title').value;
-        let newYear = document.querySelector('#new-movie-year').value;
-        let newGenre = addNewGenre()
-        let newPlot = document.querySelector('#new-movie-plot').value;
-        let newRated = document.querySelector('#new-movie-rated').value;
-        let newPoster = "https://i.ibb.co/ZcyNXmb/coming-soon.jpg";
+    let newTitle = document.querySelector('#new-movie-title').value;
+    let newYear = document.querySelector('#new-movie-year').value;
+    let newGenre = addNewGenre()
+    let newPlot = document.querySelector('#new-movie-plot').value;
+    let newRated = document.querySelector('#new-movie-rated').value;
+    let newPoster = "https://i.ibb.co/ZcyNXmb/coming-soon.jpg";
 
-        postTest(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
-        // console.log(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
-    }
+    postTest(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
+    // console.log(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
+}
 
-    function postTest(title, year, genre, plot, rating, poster) {
-        $.post('https://determined-unleashed-ixia.glitch.me/movies', {
-            Title: title,
-            Year: year,
-            Genre: genre,
-            Plot: plot,
-            Rated: rating,
-            Poster: poster
-        }).done(function (data) {
-            makeMovieCards();
-        });
-    }
+function postTest(title, year, genre, plot, rating, poster) {
+    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+        Title: title,
+        Year: year,
+        Genre: genre,
+        Plot: plot,
+        Rated: rating,
+        Poster: poster
+    }).done(function (data) {
+        makeMovieCards();
+    });
+}
 
 // --------------------------- Edit a Movie --------------------------- //
 $('#movie-edit-btn').click(() => editMovie());
@@ -255,12 +256,8 @@ function makeMovieCards() {
 }
 makeMovieCards();
 
-// $("#movie-search-container").css("display: none");
 // --------------------- Movie Search --------------------------- //
 //
-let userMovieSearch = document.querySelector('#movie-search-btn');
-userMovieSearch.addEventListener('click', makeSearchCard);
-
 function searchMovies() {
     event.preventDefault();
     let titleSearch = document.querySelector('#movie-search-input').value;
@@ -272,11 +269,8 @@ function makeSearchCard() {
 
     searchMovies().then(data => {
         console.log(data);
-        let smallCards = document.querySelector("#movie-search-container");
-        smallCards.innerHTML = ''
 
-        let movieCard = '';
-        let searchContainer = document.querySelector('#movie-large-container');
+        let searchContainer = document.querySelector('#search-container');
 
         let searchedTitle = data.Title
         let searchedActors = data.Actors
@@ -322,35 +316,53 @@ function randomMovie() {
         let randomCard = '';
         let randomContainer = document.querySelector('#random-container');
 
-            let {Title, Year, Genre, Rated, Plot, Poster, id} = data[index];
-            console.log(Title, Year, Genre, Rated, Plot, Poster, id);
+        let {Title, Year, Genre, Rated, Plot, Poster, id} = data[index];
+        console.log(Title, Year, Genre, Rated, Plot, Poster, id);
 
-            // Generates Card HTML
-            randomCard += `<div class="card text-white bg-primary mb-3">`;
-            randomCard += `<div class="row g-0"><div class="col-md-4 d-flex">`;
-            randomCard += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
-            randomCard += `<div class="col-md-8"><div class="card-body">`;
-            randomCard += `<h5 class="card-title d-inline">${Title}</h5>`;
-            randomCard += `<small class="text-muted ms-2">${Year}</small>`;
-            randomCard += `<p class="card-text mt-2">${Plot}</p>`;
-            randomCard += `<p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small>`;
-            randomCard += `</p></div></div></div></div>`;
-
+        // Generates Card HTML
+        randomCard += `<div class="card text-white bg-primary mb-3">`;
+        randomCard += `<div class="row g-0"><div class="col-md-4 d-flex">`;
+        randomCard += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
+        randomCard += `<div class="col-md-8"><div class="card-body">`;
+        randomCard += `<h5 class="card-title d-inline">${Title}</h5>`;
+        randomCard += `<small class="text-muted ms-2">${Year}</small>`;
+        randomCard += `<p class="card-text mt-2">${Plot}</p>`;
+        randomCard += `<p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small>`;
+        randomCard += `</p></div></div></div></div>`;
 
         randomContainer.innerHTML = randomCard;
-        document.querySelector(".display").style.display = "none"; // hide the main section
-        document.querySelector("#random-container").style.display = "flex"; // show the random movie
+
     })
 }
 
-$('#random-click').click(() => randomMovie());
+// --------------------- Nav Bar Links --------------------------- //
+// Runs the associated functions when each link is clicked on.
+// Hides all other containers and displays the correct content only.
+
+// Home Button
 $('#home').click(() => {
     document.querySelector(".display").style.display = "flex"; // show the main section
-    document.querySelector("#random-container").style.display = "none"; // hide the random movie
-    document.querySelector("#movie-large-container").style.display = "none"; // hide the random movie
+    document.querySelector("#random-container").style.display = "none"; // hide the random section
+    document.querySelector("#search-container").style.display = "none"; // hide the search section
 });
 
-// Specifications
+// Random Movie
+$('#random-click').click(() => {
+    randomMovie();
+    document.querySelector(".display").style.display = "none"; // hide the main section
+    document.querySelector("#random-container").style.display = "flex"; // show the random section
+    document.querySelector("#search-container").style.display = "none"; // hide the search section
+});
+
+// Search Bar
+$('#movie-search-btn').click(() => {
+    makeSearchCard();
+    document.querySelector(".display").style.display = "none"; // hide the main section
+    document.querySelector("#random-container").style.display = "none"; // hide the random section
+    document.querySelector("#search-container").style.display = "flex"; // show the search section
+});
+
+// --------------------- Project Requirements --------------------------- //
 // Your application should:
 //
 //      On page load:

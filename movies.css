@@ -68,8 +68,8 @@ p {
 #random-container {
     display: none;
 }    
-#movie-large-container{
-    display: flex;
+#search-container{
+    display: none;
     justify-content: center;
 }
 .large-card-label{
