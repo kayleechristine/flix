@@ -1,52 +1,52 @@
 //-------------------------- Genre Code ----------------------------
 
-    // Function generates genres selected into a global array
-    let newMovieGenres = []
-    function addNewGenre() {
-        newMovieGenres = [];
-        let genresChecked = document.getElementsByClassName("new-movie-genre");
-        for (let i = 0; i < 15; i++) {
-            if (genresChecked[i].checked === true && newMovieGenres.length === 0) {
-                newMovieGenres.push(`${genresChecked[i].value}`);
-            }
-            else if (genresChecked[i].checked === true){
-                newMovieGenres.push(` ${genresChecked[i].value}`);
-            }
+// Function generates genres selected into a global array
+let newMovieGenres = []
+function addNewGenre() {
+    newMovieGenres = [];
+    let genresChecked = document.getElementsByClassName("new-movie-genre");
+    for (let i = 0; i < 15; i++) {
+        if (genresChecked[i].checked === true && newMovieGenres.length === 0) {
+            newMovieGenres.push(`${genresChecked[i].value}`);
         }
-        return newMovieGenres.toString()
+        else if (genresChecked[i].checked === true){
+            newMovieGenres.push(` ${genresChecked[i].value}`);
+        }
     }
+    return newMovieGenres.toString()
+}
 
 //--------------------------- Add Movie Code ---------------------------
-    let movieAddBtn = document.querySelector('#movie-add-btn');
-    movieAddBtn.addEventListener('click', addMovie);
+let movieAddBtn = document.querySelector('#movie-add-btn');
+movieAddBtn.addEventListener('click', addMovie);
 
 // function makes post request to glitch db
-    function addMovie() {
-        event.preventDefault();
+function addMovie() {
+    event.preventDefault();
 
-        let newTitle = document.querySelector('#new-movie-title').value;
-        let newYear = document.querySelector('#new-movie-year').value;
-        let newGenre = addNewGenre()
-        let newPlot = document.querySelector('#new-movie-plot').value;
-        let newRated = document.querySelector('#new-movie-rated').value;
-        let newPoster = document.querySelector('#new-movie-poster').value;
+    let newTitle = document.querySelector('#new-movie-title').value;
+    let newYear = document.querySelector('#new-movie-year').value;
+    let newGenre = addNewGenre()
+    let newPlot = document.querySelector('#new-movie-plot').value;
+    let newRated = document.querySelector('#new-movie-rated').value;
+    let newPoster = document.querySelector('#new-movie-poster').value;
 
-        postTest(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
-        console.log(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
-    }
+    postTest(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
+    console.log(newTitle, newYear, newGenre, newPlot, newRated, newPoster);
+}
 
-    function postTest(title, year, genre, plot, rating, poster) {
-        $.post('https://determined-unleashed-ixia.glitch.me/movies', {
-            Title: title,
-            Year: year,
-            Genre: genre,
-            Plot: plot,
-            Rated: rating,
-            Poster: poster,
-        }).done(function (data) {
-            // do something with the response
-        });
-    }
+function postTest(title, year, genre, plot, rating, poster) {
+    $.post('https://determined-unleashed-ixia.glitch.me/movies', {
+        Title: title,
+        Year: year,
+        Genre: genre,
+        Plot: plot,
+        Rated: rating,
+        Poster: poster,
+    }).done(function (data) {
+        // do something with the response
+    });
+}
 
 // --------------------- Glitch Database --------------------------- //
 // Fetches movie information from the Glitch database.
@@ -162,25 +162,74 @@ function makeMovieCards() {
 }
 makeMovieCards();
 
+// $("#movie-search-container").css("display: none");
 // --------------------- Movie Search --------------------------- //
 //
 let userMovieSearch = document.querySelector('#movie-search-btn');
-userMovieSearch.addEventListener('click', searchMovies);
+userMovieSearch.addEventListener('click', makeSearchCard);
 
 function searchMovies() {
     event.preventDefault();
-
     let titleSearch = document.querySelector('#movie-search-input').value;
     omdbKey2 = "http://www.omdbapi.com/?t=" + titleSearch + "&apikey=850df038";
-
-    fetch(omdbKey2).then((response) => {
-        console.log('OMDB:', response.json());
-    });
+    return fetch(omdbKey2).then(response => (response.json()))
 }
 
-function searchData() {
-    return fetch(omdbKey2).then(response => response.json());
+function makeSearchCard() {
+
+    searchMovies().then(data => {
+        console.log(data);
+        let smallCards = document.querySelector("#movie-search-container");
+        smallCards.innerHTML = ''
+
+        let movieCard = '';
+        let searchContainer = document.querySelector('#movie-large-container');
+
+        let searchedTitle = data.Title
+        let searchedActors = data.Actors
+        let searchedDirectors = data.Director
+        let searchedPlot = data.Plot
+        let searchedGenre = data.Genre
+        let searchedPoster = data.Poster
+
+        console.log(searchedTitle, searchedActors, searchedDirectors, searchedPlot, searchedGenre, searchedPoster);
+
+
+        // Generates Card HTML
+        let searchedMovieCard = `<div class="card text-white bg-primary mb-3 " style="width: 87%; height: 70%">`
+        searchedMovieCard += `<div class="row g-0">`
+        searchedMovieCard += `<div class="col-md-4" style="width: 28%;">`
+        searchedMovieCard += `<img src="${searchedPoster}" class="img-fluid rounded-start" alt="...">`
+        searchedMovieCard += `</div>`
+        searchedMovieCard += `<div class="col-md-8">`
+        searchedMovieCard += `<div class = "card-body">`
+        searchedMovieCard += `<h5 class = "card-title" id ="searched-title" >${searchedTitle}</h5><br>`
+        searchedMovieCard += `<p class="card-text" id="searched-actors"><span class="large-card-label">Cast:</span> ${searchedActors}</p><br>`
+        searchedMovieCard += `<p class="card-text" id="searched-directors"><span class="large-card-label">Directed By:</span> ${searchedDirectors}</p><br>`
+        searchedMovieCard += `<p class="card-text" id="searched-plot"><span class="large-card-label">Summary:</span> ${searchedPlot}</p><br>`
+        searchedMovieCard += `<p class="card-text" id="searched-genre"><span class="large-card-label">Genre:</span> ${searchedGenre}</p><br>`
+        searchedMovieCard += `</div>`
+        searchedMovieCard += `</div>`
+        searchedMovieCard += `</div>`
+        searchedMovieCard += `</div>`
+
+        // Pushes to card container
+        searchContainer.innerHTML = searchedMovieCard;
+
+    })
 }
+
+//--------------- Reloads starting cards when home button is pressed --------------
+let homeBtn = document.querySelector('#home');
+let searchContainer = document.querySelector("#movie-large-container");
+homeBtn.addEventListener('click', function (){
+    searchContainer.innerHTML = ''
+    makeMovieCards();
+});
+
+// function searchData() {
+//     return fetch(omdbKey2).then(response => response.json());
+// }
 
 // Specifications
 // Your application should:
@@ -213,4 +262,4 @@ function searchData() {
 //      Add a genre property to every movie.
 //      TODO: Allow users to sort the movies by rating, title, or genre (if you have it).
 //      TODO: Allow users to search through the movies by rating, title, or genre (if you have it).
-//      Use a free movie API like OMDB to include extra info or render movie posters.
+//      Use a free movie API like OMDB to include extra info or render movie posters..
