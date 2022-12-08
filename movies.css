@@ -47,3 +47,11 @@ p {
     top: 0;
     right: 0;
 }
+#movie-large-container{
+    display: flex;
+    justify-content: center;
+}
+.large-card-label{
+    font-weight: bolder;
+    font-size: large;
+}
