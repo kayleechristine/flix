@@ -19,6 +19,9 @@
     width: 150px;
     margin-right: 2em;
 }
+#movie-search-input {
+    border-radius: 6px;
+}
 /*Card Formatting*/
 .card {
     margin: 0.25em;
