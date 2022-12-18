@@ -92,45 +92,11 @@ function postTest(title, year, genre, plot, rating, poster) {
 }
 
 // --------------------------- Edit a Movie --------------------------- //
-$('#movie-edit-btn').click(() => editMovie());
-
-// Function makes post request to glitch db
-function editMovie() {
-    event.preventDefault();
-    console.log('Edit event fired');
-
-    let editId = document.getElementById('edit-id').innerHTML;
-    let editTitle = document.getElementById('edit-movie-title').value;
-    let editYear = document.getElementById('edit-movie-year').value;
-    let editGenre = editMovieGenres(editId);
-    let editPlot = document.getElementById('edit-movie-plot').value;
-    let editRated = document.getElementById('edit-movie-rated').value;
-
-    editTest(editId, editTitle, editYear, editGenre, editPlot, editRated);
-    console.log(editId, editTitle, editYear, editGenre, editPlot, editRated);
-}
-
-function editTest(editId, title, year, genre, plot, rating) {
-
-    fetch(`https://determined-unleashed-ixia.glitch.me/movies/${editId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-            Title: title,
-            Year: year,
-            Genre: genre,
-            Plot: plot,
-            Rated: rating
-        }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    })
-    clearInputFields('edit');
-    setTimeout(() => {
-        makeMovieCards();
-    }, 500)
-
-}
+// Editing a movie is done through the Edit Modal. The modal is pre-populated
+// with the current info for the movie being selected for editing. When the
+// user is finished editing, the submit button will patch the newly-edited
+// movie info to Glitch and refresh the cards. When the Edit Modal is exited,
+// the clearInputFields method runs to clear the modal until it's called again.
 
 // Gets selected movie information and populates the Edit Modal
 function getMovieById(id) {
@@ -154,6 +120,44 @@ function getMovieById(id) {
     });
 }
 
+// Retrieves the edited info from the Edit Modal
+$('#movie-edit-btn').click(() => editMovie());
+
+function editMovie() {
+
+    let editId = document.getElementById('edit-id').innerHTML;
+    let editTitle = document.getElementById('edit-movie-title').value;
+    let editYear = document.getElementById('edit-movie-year').value;
+    let editGenre = editMovieGenres(editId);
+    let editPlot = document.getElementById('edit-movie-plot').value;
+    let editRated = document.getElementById('edit-movie-rated').value;
+
+    patchInfo(editId, editTitle, editYear, editGenre, editPlot, editRated);
+    console.log(editId, editTitle, editYear, editGenre, editPlot, editRated);
+}
+
+// Patches the edited movie info to Glitch
+function patchInfo(editId, title, year, genre, plot, rating) {
+
+    fetch(`https://determined-unleashed-ixia.glitch.me/movies/${editId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            Title: title,
+            Year: year,
+            Genre: genre,
+            Plot: plot,
+            Rated: rating
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+    clearInputFields('edit');
+    setTimeout(() => { makeMovieCards(); }, 500)
+
+}
+
+// Clears the Edit/Create Modal input fields so the modal can be re-used
 function clearInputFields(prefix) {
     console.log('clear input function fired');
 
@@ -181,7 +185,6 @@ function removeMovie(id) {
         console.error(err)
     });
 }
-// removeMovie();
 
 // --------------------- OMDB Movie Data --------------------------- //
 // Accepts a movie title and returns the data from OMDB.
@@ -242,32 +245,29 @@ function makeMovieCards() {
 
         movieContainer.innerHTML = movieCard;
 
-        // Edit Movie
-        $('.edit-movie').click(function(e){
-            // e.preventDefault();
+        // Edit Movie Listener
+        $('.edit-movie').click(function(){
             let editId = this.getAttribute('data-dbid');
             getMovieById(editId);
         });
 
-        // Delete Movie
-        $('.delete-movie').click(function(e){
-            // e.preventDefault();
+        // Delete Movie Listener
+        $('.delete-movie').click(function(){
             let deleteId = this.getAttribute('data-dbid');
             removeMovie(deleteId);
+
         });
-
     })
-
 }
 makeMovieCards();
 
 // --------------------- Movie Search --------------------------- //
-//
+// TODO: Reformat card population
 function searchMovies() {
     event.preventDefault();
     let titleSearch = document.querySelector('#movie-search-input').value;
-    omdbKey2 = "http://www.omdbapi.com/?t=" + titleSearch + "&apikey=850df038";
-    return fetch(omdbKey2).then(response => (response.json()))
+    omdbKey2 = "https://www.omdbapi.com/?t=" + titleSearch + "&apikey=850df038";
+    return fetch(omdbKey2).then(response => (response.json()));
 }
 
 function makeSearchCard() {
@@ -277,12 +277,12 @@ function makeSearchCard() {
 
         let searchContainer = document.querySelector('#search-container');
 
-        let searchedTitle = data.Title
-        let searchedActors = data.Actors
-        let searchedDirectors = data.Director
-        let searchedPlot = data.Plot
-        let searchedGenre = data.Genre
-        let searchedPoster = data.Poster
+        let searchedTitle = data.Title;
+        let searchedActors = data.Actors;
+        let searchedDirectors = data.Director;
+        let searchedPlot = data.Plot;
+        let searchedGenre = data.Genre;
+        let searchedPoster = data.Poster;
 
         console.log(searchedTitle, searchedActors, searchedDirectors, searchedPlot, searchedGenre, searchedPoster);
 
@@ -360,12 +360,12 @@ $('#random-click').click(() => {
 });
 
 // Search Bar
-$('#movie-search-btn').click(() => {
-    makeSearchCard();
-    document.querySelector(".display").style.display = "none"; // hide the main section
-    document.querySelector("#random-container").style.display = "none"; // hide the random section
-    document.querySelector("#search-container").style.display = "flex"; // show the search section
-});
+// $('#movie-search-btn').click(() => {
+//     makeSearchCard();
+//     document.querySelector(".display").style.display = "none"; // hide the main section
+//     document.querySelector("#random-container").style.display = "none"; // hide the random section
+//     document.querySelector("#search-container").style.display = "flex"; // show the search section
+// });
 
 // --------------------- Project Requirements --------------------------- //
 // Your application should:

@@ -76,3 +76,9 @@ p {
     font-weight: bolder;
     font-size: large;
 }
+#search-container {
+    display: flex;
+}
+.search-body {
+    margin: 2em 2em 1em 1em;
+}
