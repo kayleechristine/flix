@@ -2,8 +2,8 @@
 .display {
     display: none;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
+    /*justify-content: space-evenly;*/
+    align-items: start;
 }
 .preload {
     color: #e6040c;

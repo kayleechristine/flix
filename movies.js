@@ -213,25 +213,30 @@ function makeMovieCards() {
         data.forEach(movie => {
 
             let {Title, Year, Genre, Rated, Plot, Poster, id} = movie;
-            // console.log(Title, Year, Genre, Rated, Plot, Poster, id);
 
             // Generates Card HTML
-            movieCard += `<div class="card text-white bg-primary mb-3">`;
-            movieCard += `<div class="row g-0"><div class="col-md-4 d-flex">`;
-            movieCard += `<img src="${Poster}" class="rounded-start img-fluid"></div>`;
-            movieCard += `<div class="col-md-8"><div class="card-body">`;
-            movieCard += `<h5 class="card-title d-inline">${Title}</h5>`;
-            movieCard += `<small class="text-muted ms-2">${Year}</small>`;
-            movieCard += `<div class="dropend">`;
-            movieCard += `<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>`;
-            movieCard += `  <ul class="dropdown-menu bg-dark">
-                                <li><a class="dropdown-item edit-movie" href="#" data-dbid="${id}" data-bs-toggle="modal" data-bs-target="#editMovieForm">Edit</a></li>
-                                <li><a class="dropdown-item delete-movie" href="#" data-dbid="${id}">Delete</a></li>
-                            </ul>
-                            </div>`;
-            movieCard += `<p class="card-text mt-2">${Plot}</p>`;
-            movieCard += `<p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small>`;
-            movieCard += `</p></div></div></div></div>`;
+            movieCard +=
+            `<div class="card text-white bg-primary mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex">
+                        <img src="${Poster}" class="rounded-start img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body"><h5 class="card-title d-inline">${Title}</h5>
+                            <small class="text-muted ms-2">${Year}</small>
+                            <div class="dropend">
+                                <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false"></button>
+                                <ul class="dropdown-menu bg-dark" style="">
+                                    <li><a class="dropdown-item edit-movie" href="#" data-dbid="${id}"
+                                           data-bs-toggle="modal" data-bs-target="#editMovieForm">Edit</a></li>
+                                    <li><a class="dropdown-item delete-movie" href="#" data-dbid="${id}">Delete</a></li>
+                                </ul>
+                            </div>
+                            <p class="card-text mt-2">${Plot}</p><p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small></p></div>
+                    </div>
+                </div>
+            </div>`
 
         })
 
@@ -394,3 +399,8 @@ $('#movie-search-btn').click(() => {
 //      TODO: Allow users to sort the movies by rating, title, or genre (if you have it).
 //      TODO: Allow users to search through the movies by rating, title, or genre (if you have it).
 //      Use a free movie API like OMDB to include extra info or render movie posters..
+//
+//      Personal To Do:
+//      TODO: Search by Genre / Filter content feature
+//      TODO: Allow users to save movies to a Watchlist
+//      TODO: Search populates multiple results
