@@ -1,8 +1,8 @@
-/*Toggles Content Load*/
+/* Toggles Content Load */
 .display {
     display: none;
     flex-wrap: wrap;
-    /*justify-content: space-evenly;*/
+    justify-content: space-evenly;
     align-items: start;
 }
 .preload {
@@ -11,7 +11,7 @@
     margin-left: 50%;
     margin-top: 300px;
 }
-/*Nav Bar*/
+/* Nav Bar */
 .navbar {
     color: lightgrey;
 }
@@ -22,13 +22,13 @@
 #movie-search-input {
     border-radius: 6px;
 }
-/*Card Formatting*/
+/* Card Formatting */
 .card {
     margin: 0.25em;
     width: 450px;
 }
-.img-fluid {
-    height: 100%;
+.default-img {
+    height: 220px;
 }
 p {
     margin-block-start: 0;
@@ -53,7 +53,7 @@ p {
     top: 0;
     right: 0;
 }
-/*Modal Formatting*/
+/* Modal Formatting */
 .genre-container {
     display: flex;
     flex-wrap: wrap;
@@ -67,7 +67,8 @@ p {
 }
 #random-container {
     display: none;
-}    
+}
+/* Search */
 #search-container{
     display: none;
     justify-content: center;
@@ -81,7 +82,4 @@ p {
 }
 .search-body {
     margin: 2em 2em 1em 1em;
-}
-.rounded-start {
-    height: 220px;
 }

@@ -222,7 +222,7 @@ function makeMovieCards() {
             `<div class="card text-white bg-primary mb-3">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex">
-                        <img src="${Poster}" class="rounded-start img-fluid">
+                        <img src="${Poster}" class="rounded-start img-fluid default-img">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body"><h5 class="card-title d-inline">${Title}</h5>
