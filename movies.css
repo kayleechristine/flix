@@ -82,3 +82,6 @@ p {
 .search-body {
     margin: 2em 2em 1em 1em;
 }
+.rounded-start {
+    height: 220px;
+}
