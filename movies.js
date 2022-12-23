@@ -219,9 +219,9 @@ function makeMovieCards() {
 
             // Generates Card HTML
             movieCard +=
-            `<div class="card text-white bg-primary mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4 d-flex">
+            `<div class="card text-white bg-primary mb-3 col-md-4 col-12">
+                <div class="row">
+                    <div class="col-md-4 col-12 d-flex">
                         <img src="${Poster}" class="rounded-start img-fluid default-img">
                     </div>
                     <div class="col-md-8">
@@ -360,12 +360,12 @@ $('#random-click').click(() => {
 });
 
 // Search Bar
-// $('#movie-search-btn').click(() => {
-//     makeSearchCard();
-//     document.querySelector(".display").style.display = "none"; // hide the main section
-//     document.querySelector("#random-container").style.display = "none"; // hide the random section
-//     document.querySelector("#search-container").style.display = "flex"; // show the search section
-// });
+$('#movie-search-btn').click(() => {
+    makeSearchCard();
+    document.querySelector(".display").style.display = "none"; // hide the main section
+    document.querySelector("#random-container").style.display = "none"; // hide the random section
+    document.querySelector("#search-container").style.display = "flex"; // show the search section
+});
 
 // --------------------- Project Requirements --------------------------- //
 // Your application should:
