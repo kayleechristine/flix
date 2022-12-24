@@ -219,10 +219,10 @@ function makeMovieCards() {
 
             // Generates Card HTML
             movieCard +=
-            `<div class="card text-white bg-primary mb-3 col-md-4 col-12">
+            `<div class="card text-white bg-primary mb-3">
                 <div class="row">
                     <div class="col-md-4 col-12 d-flex">
-                        <img src="${Poster}" class="rounded-start img-fluid default-img">
+                        <img src="${Poster}" class="rounded-md-start card-img-top img-fluid default-img">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body"><h5 class="card-title d-inline">${Title}</h5>
