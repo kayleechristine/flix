@@ -227,6 +227,7 @@ function makeMovieCards() {
                     <div class="col-md-8">
                         <div class="card-body"><h5 class="card-title d-inline">${Title}</h5>
                             <small class="text-muted ms-2">${Year}</small>
+                            <p class="card-text mt-2">${Plot}</p><p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small></p></div>
                             <div class="dropend">
                                 <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"></button>
@@ -236,7 +237,6 @@ function makeMovieCards() {
                                     <li><a class="dropdown-item delete-movie" href="#" data-dbid="${id}">Delete</a></li>
                                 </ul>
                             </div>
-                            <p class="card-text mt-2">${Plot}</p><p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small></p></div>
                     </div>
                 </div>
             </div>`
