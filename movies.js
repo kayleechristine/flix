@@ -225,9 +225,9 @@ function makeMovieCards() {
                         <img src="${Poster}" class="rounded-md-start card-img-top img-fluid default-img">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body"><h5 class="card-title d-inline">${Title}</h5>
+                        <div class="card-body ps-sm-0"><h5 class="card-title d-inline">${Title}</h5>
                             <small class="text-muted ms-2">${Year}</small>
-                            <p class="card-text mt-2">${Plot}</p><p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small></p></div>
+                            <p class="card-text mt-2 mb-3 mb-md-0">${Plot}</p><p class="card-text"><small class="text-muted bottom">${Rated} | ${Genre}</small></p></div>
                             <div class="dropend">
                                 <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"></button>

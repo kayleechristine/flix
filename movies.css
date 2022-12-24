@@ -25,6 +25,8 @@
 /* Card Formatting */
 .card { width: 450px; }
 .default-img {
+    object-fit: cover;
+    object-position: inherit;
     height: 220px;
     border-radius: 5px 0 0 5px;
 }
