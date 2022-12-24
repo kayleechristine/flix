@@ -29,6 +29,8 @@
 }
 .default-img {
     height: 220px;
+    width: 150px;
+    border-radius: 6px 0 0 6px;
 }
 p {
     margin-block-start: 0;
